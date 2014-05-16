@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -13,6 +14,8 @@ namespace Project {
 
 		SpriteBatch spriteBatch;
 		Texture2D logoTexture;
+
+		string messageString = "";
 
 		public GameScene(Game game) : base(game) {
 
@@ -43,6 +46,8 @@ namespace Project {
 			if(keyState.IsKeyDown(Keys.Escape))
 				base.LoadScene("menu");
 
+			//messageString = textBoxInput(messageString);
+
 			base.Update(gameTime);
 		}
 
@@ -55,6 +60,8 @@ namespace Project {
 			spriteBatch.Draw(logoTexture, new Vector2 (365, 200), Color.White);
 
 			base.fonts["Arial_24px"].DrawText(spriteBatch, 335, 25, "Game Scene");
+
+			base.fonts["Arial_16px"].DrawText(spriteBatch, 25, 50, messageString);
 
 			spriteBatch.End();
 

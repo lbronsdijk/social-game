@@ -93,6 +93,7 @@
     <Compile Include="BMFont\FontLoader.cs" />
     <Compile Include="BMFont\FontPage.cs" />
     <Compile Include="BMFont\FontRenderer.cs" />
+    <Compile Include="KeyboardInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
