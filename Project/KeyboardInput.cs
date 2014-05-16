@@ -118,7 +118,7 @@ namespace Project {
 							break;
 						case Keys.Back:
 							if (text.Length > 0) {
-								text = messageString.Remove(messageString.Length - 1);
+								text = text.Remove(text.Length - 1);
 							}
 							break;
 					}
