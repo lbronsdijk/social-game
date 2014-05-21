@@ -14,10 +14,12 @@ namespace Project {
 
 		SpriteBatch spriteBatch;
 		Texture2D logoTexture;
-
-		string messageString = "";
+		TextBox textBox;
 
 		public GameScene(Game game) : base(game) {
+
+			this.UpdateOrder = 0;
+			this.DrawOrder = 0;
 
 			base.Construct(game);
 		}
@@ -36,6 +38,10 @@ namespace Project {
 			logoTexture = base.game.Content.Load<Texture2D>("Images/logo");
 
 			base.LoadFonts();
+
+			textBox = new TextBox(base.game, base.fonts["Arial_16px"]);
+			textBox.position = new Vector2(25, 50);
+
 			base.LoadContent();
 		}
 
@@ -44,9 +50,7 @@ namespace Project {
 			KeyboardState keyState = Keyboard.GetState();
 
 			if(keyState.IsKeyDown(Keys.Escape))
-				base.LoadScene("menu");
-
-			//messageString = textBoxInput(messageString);
+				base.gameManager.LoadScene("menu");
 
 			base.Update(gameTime);
 		}
@@ -60,8 +64,6 @@ namespace Project {
 			spriteBatch.Draw(logoTexture, new Vector2 (365, 200), Color.White);
 
 			base.fonts["Arial_24px"].DrawText(spriteBatch, 335, 25, "Game Scene");
-
-			base.fonts["Arial_16px"].DrawText(spriteBatch, 25, 50, messageString);
 
 			spriteBatch.End();
 

@@ -16,6 +16,9 @@ namespace Project {
 
 		public MenuScene(Game game) : base(game) {
 
+			this.UpdateOrder = 0;
+			this.DrawOrder = 0;
+
 			base.Construct(game);
 		}
 
@@ -41,7 +44,7 @@ namespace Project {
 			KeyboardState keyState = Keyboard.GetState();
 
 			if(keyState.IsKeyDown(Keys.Space))
-				base.LoadScene("game");
+				base.gameManager.LoadScene("game");
 			
 			base.Update(gameTime);
 		}

@@ -28,8 +28,13 @@ namespace BMFont
 
 		public void DrawText(SpriteBatch spriteBatch, int x, int y, string text)
 		{
+			if (spriteBatch == null || text == null) {
+				return;
+			}
+
 			int dx = x;
 			int dy = y;
+
 			foreach(char c in text)
 			{
 				FontChar fc;

@@ -93,7 +93,9 @@
     <Compile Include="BMFont\FontLoader.cs" />
     <Compile Include="BMFont\FontPage.cs" />
     <Compile Include="BMFont\FontRenderer.cs" />
-    <Compile Include="KeyboardInput.cs" />
+    <Compile Include="TextBox.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="MouseEventsHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -118,6 +120,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
     <BundleResource Include="Content\Images\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Content\config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
   </ItemGroup>

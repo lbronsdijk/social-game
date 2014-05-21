@@ -5,12 +5,12 @@ namespace Project {
 
 	public class Application : Game {
 
-		public static GameManager gameManager;
-
 		public Application() {
 
-			gameManager = new GameManager(this);
-			gameManager.LoadScene("menu");
+			GameManager gameManager = new GameManager(this);
+			Services.AddService(typeof(GameManager), gameManager);
+
+			gameManager.StartGame();
 		}
 	}
 }

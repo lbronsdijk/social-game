@@ -76,6 +76,8 @@ namespace Project {
 
 		public GameManager(Game game) {
 
+			Settings settings = new Settings();
+
 			this.game = game;
 			this.graphics = new GraphicsDeviceManager(this.game);
 
@@ -86,6 +88,16 @@ namespace Project {
 			this.screenWidth = 800;
 			this.screenHeight = 600;
 			this.isFullScreen = false;
+		}
+
+		public void StartGame() {
+
+			LoadScene("menu");
+		}
+
+		public void ExitGame() {
+
+			//Game.Exit();
 		}
 
 		public void LoadScene(string sceneName){

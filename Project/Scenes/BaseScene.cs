@@ -17,7 +17,7 @@ namespace Project {
 		protected void Construct(Game game) {
 
 			this.game = game;
-			this.gameManager = Application.gameManager;
+			this.gameManager = this.game.Services.GetService(typeof(GameManager)) as GameManager;
 			this.graphics = gameManager.graphics;
 		}
 
@@ -28,11 +28,6 @@ namespace Project {
 				"Arial_24px",
 				"Arial_32px"
 			});
-		}
-
-		protected void LoadScene(string sceneName) {
-
-			this.gameManager.LoadScene(sceneName);
 		}
 	}
 }
