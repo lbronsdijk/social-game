@@ -11,17 +11,12 @@ namespace Project {
 
 		private Game game;
 		private SpriteBatch spriteBatch;
+		private MouseEventsHandler mouseEventHandler;
+		private bool selected;
+		private int delay;
+		private Keys[] oldKeys;
 
 		private string _text;
-		private FontRenderer _font;
-		private Vector2 _position;
-		private int _width, _height, _borderSize;
-		private Color _backgroundColor, _borderColor;
-
-		private MouseEventsHandler mouseEventHandler;
-		private bool selected = false;
-		private int delay = 500;
-		private Keys[] oldKeys = new Keys[0];
 
 		public string text{
 			get{ 
@@ -32,6 +27,8 @@ namespace Project {
 			}
 		}
 
+		private FontRenderer _font;
+
 		public FontRenderer font{
 			get{
 				return _font;
@@ -40,6 +37,8 @@ namespace Project {
 				_font = value;
 			}
 		}
+
+		private Vector2 _position;
 
 		public Vector2 position{
 			get{
@@ -54,6 +53,8 @@ namespace Project {
 				}
 			}
 		}
+
+		private int _width, _height, _borderSize;
 
 		public int width{
 			get{
@@ -89,6 +90,8 @@ namespace Project {
 				_borderSize = value;
 			}
 		}
+
+		private Color _backgroundColor, _borderColor;
 
 		public Color backgroundColor{
 			get{ 
@@ -137,6 +140,10 @@ namespace Project {
 					_height
 				)
 			);
+
+			selected = false;
+			delay = 500;
+			oldKeys = new Keys[0];
 
 			base.Initialize();
 		}
@@ -297,6 +304,37 @@ namespace Project {
 						break;
 					case Keys.Z:
 						keyString = "Z";
+						break;
+
+					case Keys.D0:
+						keyString = "0";
+						break;
+					case Keys.D1:
+						keyString = "1";
+						break;
+					case Keys.D2:
+						keyString = "2";
+						break;
+					case Keys.D3:
+						keyString = "3";
+						break;
+					case Keys.D4:
+						keyString = "4";
+						break;
+					case Keys.D5:
+						keyString = "5";
+						break;
+					case Keys.D6:
+						keyString = "6";
+						break;
+					case Keys.D7:
+						keyString = "7";
+						break;
+					case Keys.D8:
+						keyString = "8";
+						break;
+					case Keys.D9:
+						keyString = "9";
 						break;
 
 					case Keys.Space:
