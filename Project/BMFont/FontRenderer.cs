@@ -35,9 +35,6 @@ namespace BMFont
 
 			List<Character> characters = new List<Character>();
 
-			int dx = x;
-			int dy = y;
-
 			int totalWidth = 0;
 
 			foreach(char c in text)
@@ -47,43 +44,44 @@ namespace BMFont
 				if(_characterMap.TryGetValue(c, out fc))
 				{
 					Character character = new Character (
-						_texture,
+						c,
 						new Rectangle (fc.X, fc.Y, fc.Width, fc.Height),
-						new Vector2 (dx + fc.XOffset, dy + fc.YOffset),
-						fc.Width + fc.XOffset
+						fc.XOffset,
+						fc.YOffset
 					);
 
-					characters.Add(character);
+					totalWidth += character.rect.Width + character.xOffset;
 
-					totalWidth += character.width;
-					dx += fc.XAdvance;
+					characters.Add(character);
 				}
 			}
-
-			if (totalWidth < maxWidth)
-				goto draw;
-				
-			totalWidth += characters[0].width;
 
 			while (totalWidth >= maxWidth) {
 
-				int width = characters[0].width;
-
+				int width = characters[0].rect.Width + characters[0].xOffset;
 				totalWidth -= width;
+
 				characters.RemoveAt(0);
-
-				foreach (Character character in characters) {
-					character.pos.X -= width;
-				}
-
-				Debug.WriteLine("totalWidth: " + totalWidth);
 			}
 
-			draw:
+			Vector2 pos = new Vector2(x, y);
 
 			foreach (Character character in characters) {
-			
-				spriteBatch.Draw(character.texture, character.pos, character.rect, fontColor);
+				
+				spriteBatch.Draw(
+					_texture, 
+					new Vector2(pos.X + character.xOffset, pos.Y + character.yOffset), 
+					character.rect, 
+					fontColor
+				);
+
+				pos.X += character.rect.Width + character.xOffset;
+
+				//fix for spaces
+				if (character.c.ToString() == " ") {
+
+					pos.X += 3;
+				}
 			}
 		}
 	}

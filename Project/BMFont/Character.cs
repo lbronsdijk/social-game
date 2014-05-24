@@ -1,22 +1,20 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BMFont
 {
 	public class Character
 	{
-		public Texture2D texture;
+		public char c;
 		public Rectangle rect;
-		public Vector2 pos;
-		public int width;
+		public int xOffset, yOffset;
 
-		public Character(Texture2D texture, Rectangle rect, Vector2 pos, int width)
+		public Character(char c, Rectangle rect, int xOffset, int yOffset)
 		{
-			this.texture = texture;
+			this.c = c;
 			this.rect = rect;
-			this.pos = pos;
-			this.width = width;
+			this.xOffset = xOffset;
+			this.yOffset = yOffset;
 		}
 	}
 }
