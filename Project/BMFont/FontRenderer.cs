@@ -70,18 +70,15 @@ namespace BMFont
 				
 				spriteBatch.Draw(
 					_texture, 
-					new Vector2(pos.X + character.xOffset, pos.Y + character.yOffset), 
+					new Vector2(
+						pos.X + character.xOffset, 
+						pos.Y + character.yOffset
+					), 
 					character.rect, 
 					fontColor
 				);
 
 				pos.X += character.rect.Width + character.xOffset;
-
-				//fix for spaces
-				if (character.c.ToString() == " ") {
-
-					pos.X += 3;
-				}
 			}
 		}
 	}
