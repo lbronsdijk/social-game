@@ -15,6 +15,8 @@ namespace Project {
 		private bool selected;
 		private int delay;
 		private Keys[] oldKeys;
+		private Rectangle borderRect, backgroundRect;
+		private Texture2D pixel;
 
 		private string _text;
 
@@ -48,8 +50,8 @@ namespace Project {
 				_position = value;
 
 				if (mouseEventHandler != null) {
-					mouseEventHandler.rect.X = (int)_position.X;
-					mouseEventHandler.rect.Y = (int)_position.Y;
+					mouseEventHandler.clickArea.X = (int)_position.X;
+					mouseEventHandler.clickArea.Y = (int)_position.Y;
 				}
 			}
 		}
@@ -64,7 +66,7 @@ namespace Project {
 				_width = value;
 
 				if (mouseEventHandler != null) {
-					mouseEventHandler.rect.Width = _width;
+					mouseEventHandler.clickArea.Width = _width;
 				}
 			}
 		}
@@ -77,7 +79,7 @@ namespace Project {
 				_height = value;
 
 				if (mouseEventHandler != null) {
-					mouseEventHandler.rect.Height = _height;
+					mouseEventHandler.clickArea.Height = _height;
 				}
 			}
 		}
@@ -91,7 +93,7 @@ namespace Project {
 			}
 		}
 
-		private Color _backgroundColor, _borderColor;
+		private Color _backgroundColor, _borderColor, _fontColor;
 
 		public Color backgroundColor{
 			get{ 
@@ -111,6 +113,15 @@ namespace Project {
 			}
 		}
 
+		public Color fontColor{
+			get{ 
+				return _borderColor;
+			}
+			set{
+				_borderColor = value;
+			}
+		}
+
 		public TextBox(Game game, FontRenderer font) : base(game) {
 
 			this.UpdateOrder = 1;
@@ -122,10 +133,11 @@ namespace Project {
 			this.text = "";
 
 			this.width = 200;
-			this.height = 50;
-			this.borderSize = 1;
+			this.height = 30;
+			this.borderSize = 2;
 			this.backgroundColor = Color.White;
-			this.borderColor = Color.Black;
+			this.borderColor = Color.Gray;
+			this.fontColor = Color.Gray;
 
 			this.game.Components.Add(this);
 		}
@@ -152,10 +164,28 @@ namespace Project {
 
 			spriteBatch = new SpriteBatch (this.game.GraphicsDevice);
 
+			pixel = new Texture2D(this.game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+			pixel.SetData(new[] { Color.White });
+
 			base.LoadContent();
 		}
 
 		public override void Update(GameTime gameTime) {
+
+			//update rectangles
+			borderRect = new Rectangle(
+				(int)_position.X - _borderSize, 
+				(int)_position.Y - _borderSize, 
+				_width + (_borderSize * 2), 
+				_height + (_borderSize * 2)
+			);
+
+			backgroundRect = new Rectangle(
+				(int)_position.X, 
+				(int)_position.Y, 
+				_width, 
+				_height
+			);
 
 			//mouse
 			if (mouseEventHandler.LeftClick()) {
@@ -163,6 +193,8 @@ namespace Project {
 				Debug.WriteLine ("TextBox select event");
 
 				selected = true;
+				_borderColor = Color.Black;
+				_fontColor = Color.Black;
 			}
 
 			if (mouseEventHandler.GlobalLeftClick() && !mouseEventHandler.InsideRect()) {
@@ -170,16 +202,26 @@ namespace Project {
 				Debug.WriteLine("TextBox deselect event");
 
 				selected = false;
+				_borderColor = Color.Gray;
+				_fontColor = Color.Gray;
 			}
 
 			if(mouseEventHandler.Enter()) {
-
+			
 				Debug.WriteLine("TextBox mouseEnter event");
+
+				_borderColor = Color.Black;
 			}
 
 			if(mouseEventHandler.Leave()) {
 
 				Debug.WriteLine("TextBox mouseLeave event");
+
+				if (!selected) {
+				
+					_borderColor = Color.Gray;
+					_fontColor = Color.Gray;
+				}
 			}
 
 			if (!selected) {
@@ -368,7 +410,11 @@ namespace Project {
 		
 			spriteBatch.Begin();
 
-			_font.DrawText(spriteBatch, (int)_position.X, (int)_position.Y, _text);
+			spriteBatch.Draw(pixel, borderRect, _borderColor);
+
+			spriteBatch.Draw(pixel, backgroundRect, _backgroundColor);
+
+			_font.DrawText(spriteBatch, (int)_position.X, (int)_position.Y, _width, _text, _fontColor);
 
 			spriteBatch.End();
 

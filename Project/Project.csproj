@@ -96,6 +96,7 @@
     <Compile Include="TextBox.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="MouseEventsHandler.cs" />
+    <Compile Include="BMFont\Character.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

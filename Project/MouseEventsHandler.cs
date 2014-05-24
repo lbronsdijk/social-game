@@ -6,7 +6,7 @@ namespace Project {
 
 	public class MouseEventsHandler {
 
-		public Rectangle rect;
+		public Rectangle clickArea;
 
 		private bool leftClick = false;
 		private bool rightClick = false;
@@ -14,9 +14,9 @@ namespace Project {
 		private bool globalRightClick = false;
 		private bool hover = false;
 
-		public MouseEventsHandler(Rectangle rect) {
+		public MouseEventsHandler(Rectangle clickArea) {
 
-			this.rect = rect;
+			this.clickArea = clickArea;
 		}
 
 		public bool LeftClick() {
@@ -132,7 +132,7 @@ namespace Project {
 		public bool InsideRect(){
 		
 			Point mousePos = Mouse.GetState().Position;
-			return ((mousePos.X >= rect.X && mousePos.X <= (rect.X + rect.Width)) && (mousePos.Y >= rect.Y && mousePos.Y <= (rect.Y + rect.Height)));
+			return ((mousePos.X >= clickArea.X && mousePos.X <= (clickArea.X + clickArea.Width)) && (mousePos.Y >= clickArea.Y && mousePos.Y <= (clickArea.Y + clickArea.Height)));
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml.Serialization;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -26,26 +27,63 @@ namespace BMFont
 		private FontFile _fontFile;
 		private Texture2D _texture;
 
-		public void DrawText(SpriteBatch spriteBatch, int x, int y, string text)
+		public void DrawText(SpriteBatch spriteBatch, int x, int y, int maxWidth, string text, Color fontColor)
 		{
 			if (spriteBatch == null || text == null) {
 				return;
 			}
 
+			List<Character> characters = new List<Character>();
+
 			int dx = x;
 			int dy = y;
+
+			int totalWidth = 0;
 
 			foreach(char c in text)
 			{
 				FontChar fc;
+
 				if(_characterMap.TryGetValue(c, out fc))
 				{
-					var sourceRectangle = new Rectangle(fc.X, fc.Y, fc.Width, fc.Height);
-					var position = new Vector2(dx + fc.XOffset, dy + fc.YOffset);
+					Character character = new Character (
+						_texture,
+						new Rectangle (fc.X, fc.Y, fc.Width, fc.Height),
+						new Vector2 (dx + fc.XOffset, dy + fc.YOffset),
+						fc.Width + fc.XOffset
+					);
 
-					spriteBatch.Draw(_texture, position, sourceRectangle, Color.White);
+					characters.Add(character);
+
+					totalWidth += character.width;
 					dx += fc.XAdvance;
 				}
+			}
+
+			if (totalWidth < maxWidth)
+				goto draw;
+				
+			totalWidth += characters[0].width;
+
+			while (totalWidth >= maxWidth) {
+
+				int width = characters[0].width;
+
+				totalWidth -= width;
+				characters.RemoveAt(0);
+
+				foreach (Character character in characters) {
+					character.pos.X -= width;
+				}
+
+				Debug.WriteLine("totalWidth: " + totalWidth);
+			}
+
+			draw:
+
+			foreach (Character character in characters) {
+			
+				spriteBatch.Draw(character.texture, character.pos, character.rect, fontColor);
 			}
 		}
 	}
