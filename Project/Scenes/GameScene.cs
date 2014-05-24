@@ -14,7 +14,7 @@ namespace Project {
 
 		SpriteBatch spriteBatch;
 		Texture2D logoTexture;
-		TextBox textBox1;
+		TextBox textBox1, textBox2;
 
 		public GameScene(Game game) : base(game) {
 
@@ -41,6 +41,12 @@ namespace Project {
 
 			textBox1 = new TextBox(base.game, base.fonts["Arial_24px"]);
 			textBox1.position = new Vector2(25, 25);
+			textBox1.width = 300;
+
+			textBox2 = new TextBox(base.game, base.fonts["Arial_16px"]);
+			textBox2.position = new Vector2(25, 75);
+			textBox2.height = 17;
+			textBox2.borderSize = 5;
 
 			base.LoadContent();
 		}
