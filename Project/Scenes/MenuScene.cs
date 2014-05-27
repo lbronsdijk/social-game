@@ -57,7 +57,7 @@ namespace Project {
 
 			spriteBatch.Draw(logoTexture, new Vector2 (25, 200), Color.White);
 
-			base.fonts["Arial_32px"].DrawText(spriteBatch, 25, 25, base.gameManager.screenWidth, "Menu Scene", Color.White);
+			base.fonts["Arial_32px"].DrawText(spriteBatch, 25, 25, base.gameManager.screenWidth, "Menu Scene", Color.White, false);
 
 			spriteBatch.End();
 

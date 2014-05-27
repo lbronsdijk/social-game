@@ -14,7 +14,7 @@ namespace Project {
 
 		SpriteBatch spriteBatch;
 		Texture2D logoTexture;
-		TextBox textBox1, textBox2;
+		TextBox textBox1, textBox2, textBox3;
 
 		public GameScene(Game game) : base(game) {
 
@@ -39,7 +39,7 @@ namespace Project {
 
 			base.LoadFonts();
 
-			textBox1 = new TextBox(base.game, base.fonts["Arial_24px"]);
+			textBox1 = new TextBox(base.game, base.fonts["Comic_Sans_24px"]);
 			textBox1.position = new Vector2(25, 25);
 			textBox1.width = 300;
 
@@ -47,6 +47,21 @@ namespace Project {
 			textBox2.position = new Vector2(25, 75);
 			textBox2.height = 17;
 			textBox2.borderSize = 5;
+
+			int margin = 10;
+
+			textBox3 = new TextBox(base.game, base.fonts["Arial_32px"]);
+
+			//textBox3.text = "hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo ola";
+
+			textBox3.width = ((base.gameManager.screenWidth - (textBox3.borderSize * 2)) - (margin * 2));
+			textBox3.height = 100;
+			textBox3.position = new Vector2(
+				textBox3.borderSize + margin, 
+				(((base.gameManager.screenHeight - textBox3.height) - textBox3.borderSize) - margin)
+			);
+			textBox3.editable = false;
+			textBox3.multiLines = true;
 
 			base.LoadContent();
 		}
@@ -69,7 +84,7 @@ namespace Project {
 
 			spriteBatch.Draw(logoTexture, new Vector2 (365, 200), Color.White);
 
-			base.fonts["Arial_24px"].DrawText(spriteBatch, 335, 25, base.gameManager.screenWidth, "Game Scene", Color.White);
+			base.fonts["Arial_24px"].DrawText(spriteBatch, 335, 25, base.gameManager.screenWidth, "Game Scene", Color.White, false);
 
 			spriteBatch.End();
 

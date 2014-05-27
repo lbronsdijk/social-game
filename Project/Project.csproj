@@ -93,10 +93,10 @@
     <Compile Include="BMFont\FontLoader.cs" />
     <Compile Include="BMFont\FontPage.cs" />
     <Compile Include="BMFont\FontRenderer.cs" />
-    <Compile Include="TextBox.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="MouseEventsHandler.cs" />
     <Compile Include="BMFont\Character.cs" />
+    <Compile Include="TextBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -124,6 +124,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
     <BundleResource Include="Content\config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Content\Fonts\Comic_Sans_24px_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Content\Fonts\Comic_Sans_24px.fnt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
   </ItemGroup>

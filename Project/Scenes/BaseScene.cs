@@ -26,7 +26,8 @@ namespace Project {
 			this.fonts = FontLoader.LoadFiles(this.game, new string[]{
 				"Arial_16px",
 				"Arial_24px",
-				"Arial_32px"
+				"Arial_32px",
+				"Comic_Sans_24px"
 			});
 		}
 	}

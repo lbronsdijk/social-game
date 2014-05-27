@@ -122,6 +122,26 @@ namespace Project {
 			}
 		}
 
+		private bool _editable, _multiLines;
+
+		public bool editable{
+			get{ 
+				return _editable;
+			}
+			set{
+				_editable = value;
+			}
+		}
+
+		public bool multiLines{
+			get{ 
+				return _multiLines;
+			}
+			set{
+				_multiLines = value;
+			}
+		}
+
 		public TextBox(Game game, FontRenderer font) : base(game) {
 
 			this.UpdateOrder = 1;
@@ -138,6 +158,8 @@ namespace Project {
 			this.backgroundColor = Color.White;
 			this.borderColor = Color.Gray;
 			this.fontColor = Color.Gray;
+			this.editable = true;
+			this.multiLines = false;
 
 			this.game.Components.Add(this);
 		}
@@ -224,7 +246,7 @@ namespace Project {
 				}
 			}
 
-			if (!selected) {
+			if (!selected || !_editable) {
 
 				return;
 			}
@@ -414,7 +436,7 @@ namespace Project {
 
 			spriteBatch.Draw(pixel, backgroundRect, _backgroundColor);
 
-			_font.DrawText(spriteBatch, (int)_position.X, (int)_position.Y, _width, _text, _fontColor);
+			_font.DrawText(spriteBatch, (int)_position.X, (int)_position.Y, _width, _text, _fontColor, _multiLines);
 
 			spriteBatch.End();
 
