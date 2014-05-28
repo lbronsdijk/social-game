@@ -43,9 +43,16 @@ namespace BMFont
 
 				if(_characterMap.TryGetValue(c, out fc))
 				{
+					int fixWidth = 0;
+
+					if (c.ToString() == " ") {
+
+						fixWidth = 3;
+					} 
+
 					Character character = new Character (
 						c,
-						new Rectangle (fc.X, fc.Y, fc.Width, fc.Height),
+						new Rectangle (fc.X, fc.Y, fc.Width + fixWidth, fc.Height),
 						fc.XOffset,
 						fc.YOffset
 					);
@@ -107,17 +114,15 @@ namespace BMFont
 						lines.Add(lineNumber, line);
 						//reset
 						line = new List<Character>();
-						line.Add(character);
 						lineNumber++;
 						curWidth = 0;
 
-					} else {
-
-						//Debug.WriteLine("add character: " + character.c);
-
-						line.Add(character);
 					}
+
+					line.Add(character);
 				}
+
+				lines.Add(lineNumber, line);
 
 				Vector2 pos = new Vector2 (x, y);
 

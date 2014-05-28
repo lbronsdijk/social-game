@@ -55,7 +55,7 @@ namespace Project {
 
 			textBox3 = new TextBox(base.game, base.fonts["Arial_32px"]);
 
-			//textBox3.text = "hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo hallo ola";
+			textBox3.text = "Bobby's avontuur op de markt word u mede mogelijk gemaakt door Lloyd, Luc, Arman en Lesley!";
 
 			textBox3.width = ((base.gameManager.screenWidth - (textBox3.borderSize * 2)) - (margin * 2));
 			textBox3.height = 100;
