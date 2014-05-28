@@ -15,6 +15,9 @@ namespace Project {
 		SpriteBatch spriteBatch;
 		Texture2D logoTexture;
 		TextBox textBox1, textBox2, textBox3;
+		Path path;
+		Texture2D pixel;
+		Rectangle rect;
 
 		public GameScene(Game game) : base(game) {
 
@@ -63,6 +66,25 @@ namespace Project {
 			textBox3.editable = false;
 			textBox3.multiLines = true;
 
+			pixel = new Texture2D(this.game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+			pixel.SetData(new[] { Color.White });
+
+			rect = new Rectangle(
+				500, 
+				500, 
+				50, 
+				50
+			);
+
+			List<Vector2> wayPoints = new List<Vector2>();
+			wayPoints.Add(new Vector2(25, 20));
+			wayPoints.Add(new Vector2(176, 200));
+			wayPoints.Add(new Vector2(657, 400));
+			wayPoints.Add(new Vector2(230, 150));
+			wayPoints.Add(new Vector2(450, 500));
+
+			path = new Path(rect, wayPoints, 0.5f);
+
 			base.LoadContent();
 		}
 
@@ -72,6 +94,11 @@ namespace Project {
 
 			if(keyState.IsKeyDown(Keys.Escape))
 				base.gameManager.LoadScene("menu");
+
+			if (path.isMoving) {
+				rect = path.Follow(gameTime);
+			}
+
 
 			base.Update(gameTime);
 		}
@@ -83,6 +110,8 @@ namespace Project {
 			spriteBatch.Begin();
 
 			spriteBatch.Draw(logoTexture, new Vector2 (365, 200), Color.White);
+
+			spriteBatch.Draw(pixel, rect, Color.White);
 
 			base.fonts["Arial_24px"].DrawText(spriteBatch, 335, 25, base.gameManager.screenWidth, "Game Scene", Color.White, false);
 

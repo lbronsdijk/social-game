@@ -97,6 +97,7 @@
     <Compile Include="MouseEventsHandler.cs" />
     <Compile Include="BMFont\Character.cs" />
     <Compile Include="TextBox.cs" />
+    <Compile Include="Path.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
