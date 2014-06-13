@@ -11,7 +11,7 @@ namespace Project {
 
 		private Game game;
 		private SpriteBatch spriteBatch;
-		private MouseEventsHandler mouseEventHandler;
+		private Rectangle clickArea;
 		private bool selected;
 		private int delay;
 		private Keys[] oldKeys;
@@ -48,11 +48,6 @@ namespace Project {
 			}
 			set{ 
 				_position = value;
-
-				if (mouseEventHandler != null) {
-					mouseEventHandler.clickArea.X = (int)_position.X;
-					mouseEventHandler.clickArea.Y = (int)_position.Y;
-				}
 			}
 		}
 
@@ -64,10 +59,6 @@ namespace Project {
 			}
 			set{
 				_width = value;
-
-				if (mouseEventHandler != null) {
-					mouseEventHandler.clickArea.Width = _width;
-				}
 			}
 		}
 
@@ -77,10 +68,6 @@ namespace Project {
 			}
 			set{
 				_height = value;
-
-				if (mouseEventHandler != null) {
-					mouseEventHandler.clickArea.Height = _height;
-				}
 			}
 		}
 
@@ -166,14 +153,7 @@ namespace Project {
 
 		public override void Initialize() {
 
-			mouseEventHandler = new MouseEventsHandler(
-				new Rectangle(
-					(int)_position.X, 
-					(int)_position.X, 
-					_width, 
-					_height
-				)
-			);
+			clickArea = new Rectangle ((int)_position.X, (int)_position.Y, _width, _height);
 
 			selected = false;
 			delay = 500;
@@ -209,8 +189,15 @@ namespace Project {
 				_height
 			);
 
+			clickArea = new Rectangle (
+				(int)_position.X, 
+				(int)_position.Y, 
+				_width, 
+				_height
+			);
+
 			//mouse
-			if (mouseEventHandler.LeftClick()) {
+			if (MouseEventsHandler.LeftClick(clickArea)) {
 
 				Debug.WriteLine ("TextBox select event");
 
@@ -219,7 +206,7 @@ namespace Project {
 				_fontColor = Color.Black;
 			}
 
-			if (mouseEventHandler.GlobalLeftClick() && !mouseEventHandler.InsideRect()) {
+			if (MouseEventsHandler.GlobalLeftClick(clickArea) && !MouseEventsHandler.InsideClickArea(clickArea)) {
 
 				Debug.WriteLine("TextBox deselect event");
 
@@ -228,14 +215,14 @@ namespace Project {
 				_fontColor = Color.Gray;
 			}
 
-			if(mouseEventHandler.Enter()) {
+			if(MouseEventsHandler.Enter(clickArea)) {
 			
 				Debug.WriteLine("TextBox mouseEnter event");
 
 				_borderColor = Color.Black;
 			}
 
-			if(mouseEventHandler.Leave()) {
+			if(MouseEventsHandler.Leave(clickArea)) {
 
 				Debug.WriteLine("TextBox mouseLeave event");
 

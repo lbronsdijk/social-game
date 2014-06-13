@@ -1,36 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace Project {
 
-	public class MouseEventsHandler {
+	public static class MouseEventsHandler {
+	
+		private static Dictionary<Rectangle, Dictionary<string, bool>> events = new Dictionary<Rectangle, Dictionary<string, bool>>();
 
-		public Rectangle clickArea;
+		private static void checkIfEventsExistForClickArea(Rectangle clickArea){
 
-		private bool leftClick = false;
-		private bool rightClick = false;
-		private bool globalLeftClick = false;
-		private bool globalRightClick = false;
-		private bool hover = false;
+			if (!events.ContainsKey(clickArea)) {
 
-		public MouseEventsHandler(Rectangle clickArea) {
+				Dictionary<string, bool> e = new Dictionary<string, bool>();
+				e.Add ("leftClick", false);
+				e.Add ("rightClick", false);
+				e.Add ("globalLeftClick", false);
+				e.Add ("globalRightClick", false);
+				e.Add ("hover", false);
 
-			this.clickArea = clickArea;
+				events.Add(clickArea, e);
+			}
 		}
 
-		public bool LeftClick() {
+		public static bool LeftClick(Rectangle clickArea) {
+
+			checkIfEventsExistForClickArea(clickArea);
 
 			MouseState mouseState = Mouse.GetState();
 
-			if (!leftClick && mouseState.LeftButton == ButtonState.Pressed && InsideRect()) {
+			if (!events[clickArea]["leftClick"] && mouseState.LeftButton == ButtonState.Pressed && InsideClickArea(clickArea)) {
 
-				leftClick = true;
+				events[clickArea]["leftClick"] = true;
 				return true;
 
-			} else if (leftClick && mouseState.LeftButton != ButtonState.Pressed) {
+			} else if (events[clickArea]["leftClick"] && mouseState.LeftButton != ButtonState.Pressed) {
 
-				leftClick = false;
+				events[clickArea]["leftClick"] = false;
 				return false;
 
 			} else {
@@ -39,18 +46,20 @@ namespace Project {
 			}
 		}
 
-		public bool RightClick() {
+		public static bool RightClick(Rectangle clickArea) {
+
+			checkIfEventsExistForClickArea(clickArea);
 
 			MouseState mouseState = Mouse.GetState();
 
-			if (!rightClick && mouseState.RightButton == ButtonState.Pressed && InsideRect()) {
+			if (!events[clickArea]["rightClick"] && mouseState.RightButton == ButtonState.Pressed && InsideClickArea(clickArea)) {
 
-				rightClick = true;
+				events[clickArea]["rightClick"] = true;
 				return true;
 
-			} else if (rightClick && mouseState.RightButton != ButtonState.Pressed) {
+			} else if (events[clickArea]["rightClick"] && mouseState.RightButton != ButtonState.Pressed) {
 
-				rightClick = false;
+				events[clickArea]["rightClick"] = false;
 				return false;
 
 			} else {
@@ -59,18 +68,20 @@ namespace Project {
 			}
 		}
 
-		public bool GlobalLeftClick() {
+		public static bool GlobalLeftClick(Rectangle clickArea) {
+
+			checkIfEventsExistForClickArea(clickArea);
 
 			MouseState mouseState = Mouse.GetState();
 
-			if (!globalLeftClick && mouseState.LeftButton == ButtonState.Pressed) {
+			if (!events[clickArea]["globalLeftClick"] && mouseState.LeftButton == ButtonState.Pressed) {
 
-				globalLeftClick = true;
+				events[clickArea]["globalLeftClick"] = true;
 				return true;
 
-			} else if (globalLeftClick && mouseState.LeftButton != ButtonState.Pressed) {
+			} else if (events[clickArea]["globalLeftClick"] && mouseState.LeftButton != ButtonState.Pressed) {
 
-				globalLeftClick = false;
+				events[clickArea]["globalLeftClick"] = false;
 				return false;
 
 			} else {
@@ -79,18 +90,20 @@ namespace Project {
 			}
 		}
 
-		public bool GlobalRightClick() {
+		public static bool GlobalRightClick(Rectangle clickArea) {
+
+			checkIfEventsExistForClickArea(clickArea);
 
 			MouseState mouseState = Mouse.GetState();
 
-			if (!globalRightClick && mouseState.RightButton == ButtonState.Pressed) {
+			if (!events[clickArea]["globalRightClick"] && mouseState.RightButton == ButtonState.Pressed) {
 
-				globalRightClick = true;
+				events[clickArea]["globalRightClick"] = true;
 				return true;
 
-			} else if (globalRightClick && mouseState.RightButton != ButtonState.Pressed) {
+			} else if (events[clickArea]["globalRightClick"] && mouseState.RightButton != ButtonState.Pressed) {
 
-				globalRightClick = false;
+				events[clickArea]["globalRightClick"] = false;
 				return false;
 
 			} else {
@@ -99,13 +112,15 @@ namespace Project {
 			}
 		}
 
-		public bool Enter() {
+		public static bool Enter(Rectangle clickArea) {
+
+			checkIfEventsExistForClickArea(clickArea);
 
 			Point mousePos = Mouse.GetState().Position;
 
-			if (!hover && InsideRect()) {
+			if (!events[clickArea]["hover"] && InsideClickArea(clickArea)) {
 
-				hover = true;
+				events[clickArea]["hover"] = true;
 				return true;
 
 			} else {
@@ -114,13 +129,15 @@ namespace Project {
 			}
 		}
 
-		public bool Leave() {
+		public static bool Leave(Rectangle clickArea) {
+
+			checkIfEventsExistForClickArea(clickArea);
 
 			Point mousePos = Mouse.GetState().Position;
 
-			if (hover && !InsideRect()) {
+			if (events[clickArea]["hover"] && !InsideClickArea(clickArea)) {
 
-				hover = false;
+				events[clickArea]["hover"] = false;
 				return true;
 
 			} else {
@@ -129,8 +146,10 @@ namespace Project {
 			}
 		}
 
-		public bool InsideRect(){
-		
+		public static bool InsideClickArea(Rectangle clickArea){
+
+			checkIfEventsExistForClickArea(clickArea);
+
 			Point mousePos = Mouse.GetState().Position;
 			return ((mousePos.X >= clickArea.X && mousePos.X <= (clickArea.X + clickArea.Width)) && (mousePos.Y >= clickArea.Y && mousePos.Y <= (clickArea.Y + clickArea.Height)));
 		}

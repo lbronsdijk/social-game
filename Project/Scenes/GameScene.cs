@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Diagnostics;
 
 namespace Project {
 
@@ -14,10 +15,11 @@ namespace Project {
 
 		SpriteBatch spriteBatch;
 		Texture2D logoTexture;
-		TextBox textBox1, textBox2, textBox3;
-		Path path;
+		TextBox textBox1;
 		Texture2D pixel;
-		Rectangle rect;
+		Rectangle plr, npc, npc2, obstacle;
+
+		PathManager pathManager = new PathManager();
 
 		public GameScene(Game game) : base(game) {
 
@@ -46,44 +48,54 @@ namespace Project {
 			textBox1.position = new Vector2(25, 25);
 			textBox1.width = 300;
 
-			textBox2 = new TextBox(base.game, base.fonts["Arial_16px"]);
-			textBox2.position = new Vector2(25, 75);
-			textBox2.height = 17;
-			textBox2.borderSize = 5;
-
-			int margin = 10;
-
-			textBox3 = new TextBox(base.game, base.fonts["Arial_32px"]);
-
-			textBox3.text = "Bobby's avontuur op de markt word u mede mogelijk gemaakt door Lloyd, Luc, Arman en Lesley!";
-
-			textBox3.width = ((base.gameManager.screenWidth - (textBox3.borderSize * 2)) - (margin * 2));
-			textBox3.height = 100;
-			textBox3.position = new Vector2(
-				textBox3.borderSize + margin, 
-				(((base.gameManager.screenHeight - textBox3.height) - textBox3.borderSize) - margin)
-			);
-			textBox3.editable = false;
-			textBox3.multiLines = true;
-
 			pixel = new Texture2D(this.game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 			pixel.SetData(new[] { Color.White });
 
-			rect = new Rectangle(
-				500, 
-				500, 
+			plr = new Rectangle(
+				350, 
+				480, 
 				50, 
 				50
 			);
 
-			List<Vector2> wayPoints = new List<Vector2>();
-			wayPoints.Add(new Vector2(25, 20));
-			wayPoints.Add(new Vector2(176, 200));
-			wayPoints.Add(new Vector2(657, 400));
-			wayPoints.Add(new Vector2(230, 150));
-			wayPoints.Add(new Vector2(450, 500));
+			npc = new Rectangle(
+				350, 
+				100, 
+				50, 
+				50
+			);
 
-			path = new Path(rect, wayPoints, 0.5f);
+			npc2 = new Rectangle(
+				350, 
+				540, 
+				50, 
+				50
+			);
+
+			obstacle = new Rectangle(
+				225, 
+				300, 
+				300, 
+				50
+			);
+
+			List<Vector2> wayPoints = new List<Vector2>();
+			wayPoints.Add(new Vector2(350, 360));
+			wayPoints.Add(new Vector2(165, 360));
+			wayPoints.Add(new Vector2(165, 240));
+			wayPoints.Add(new Vector2(350, 240));
+			wayPoints.Add(new Vector2(350, 160));
+
+			List<Vector2> wayPoints2 = new List<Vector2>();
+			wayPoints2.Add(new Vector2(350, 160));
+			wayPoints2.Add(new Vector2(350, 240));
+			wayPoints2.Add(new Vector2(535, 240));
+			wayPoints2.Add(new Vector2(535, 360));
+			wayPoints2.Add(new Vector2(350, 360));
+			wayPoints2.Add(new Vector2(350, 480));
+
+			pathManager.createPath("move_to_npc", wayPoints);
+			pathManager.createPath("move_to_npc_2", wayPoints2);
 
 			base.LoadContent();
 		}
@@ -95,10 +107,18 @@ namespace Project {
 			if(keyState.IsKeyDown(Keys.Escape))
 				base.gameManager.LoadScene("menu");
 
-			if (path.isMoving) {
-				rect = path.Follow(gameTime);
+			if (MouseEventsHandler.LeftClick(npc)) {
+
+				plr = pathManager.MoveRectAlongPath(plr, "move_to_npc", 1.0f, true);
 			}
 
+			if (MouseEventsHandler.LeftClick(npc2)) {
+
+				plr = pathManager.MoveRectAlongPath(plr, "move_to_npc_2", 1.0f, true);
+			}
+
+			plr = pathManager.MoveRectAlongPath(plr, "move_to_npc", 1.0f, false);
+			plr = pathManager.MoveRectAlongPath(plr, "move_to_npc_2", 1.0f, false);
 
 			base.Update(gameTime);
 		}
@@ -109,9 +129,12 @@ namespace Project {
 
 			spriteBatch.Begin();
 
-			spriteBatch.Draw(logoTexture, new Vector2 (365, 200), Color.White);
+			spriteBatch.Draw(logoTexture, new Vector2 (700, 500), Color.White);
 
-			spriteBatch.Draw(pixel, rect, Color.White);
+			spriteBatch.Draw(pixel, plr, Color.White);
+			spriteBatch.Draw(pixel, npc, Color.ForestGreen);
+			spriteBatch.Draw(pixel, npc2, Color.ForestGreen);
+			spriteBatch.Draw(pixel, obstacle, Color.Gray);
 
 			base.fonts["Arial_24px"].DrawText(spriteBatch, 335, 25, base.gameManager.screenWidth, "Game Scene", Color.White, false);
 

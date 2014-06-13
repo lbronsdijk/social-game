@@ -98,6 +98,7 @@
     <Compile Include="BMFont\Character.cs" />
     <Compile Include="TextBox.cs" />
     <Compile Include="Path.cs" />
+    <Compile Include="Button.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -141,5 +142,8 @@
     <Folder Include="Content\Fonts\" />
     <Folder Include="Content\Images\" />
     <Folder Include="Content\Audio\" />
+    <Folder Include="NPC\" />
+    <Folder Include="Objects\" />
+    <Folder Include="Quests\" />
   </ItemGroup>
 </Project>
