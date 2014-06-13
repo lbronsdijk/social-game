@@ -45,11 +45,15 @@ namespace Project {
 
 				mRect.followingPathName = pathName;
 
-				mRect.StartMoving();
+				mRect.StartMoving ();
 
-				mRect.curWaypoint = path.indexOfNearestWaypoint(mRect.rect);
+				mRect.curWaypoint = path.indexOfNearestWaypoint (mRect.rect);
 
-			} else if (!start && mRect.followingPathName != pathName){
+			} else if (!start && mRect.followingPathName != pathName) {
+
+				return rect;
+
+			} else if (!start && mRect.isFinished) {
 
 				return rect;
 			}
@@ -66,14 +70,19 @@ namespace Project {
 				Vector2 destination = path.waypoints[mRect.curWaypoint];
 				Vector2 position = new Vector2((float)mRect.rect.X, (float)mRect.rect.Y);
 
-				Vector2 direction = destination - position;
-				direction.Normalize();
+				float distance = 0.0f;
 
-				position += direction * speed;
+				if (destination != position) {
 
-				float distance = Vector2.Distance(position, destination);
+					Vector2 direction = destination - position;
+					direction.Normalize();
 
-				if (distance < 1.0f) {
+					position += direction * speed;
+
+					distance = Vector2.Distance(position, destination);
+				}
+
+				if (distance < 5.0f) {
 
 					position = destination;
 					mRect.curWaypoint++;
@@ -122,10 +131,7 @@ namespace Project {
 
 			foreach (MoveableRectangle mRect in moveableRects) {
 
-				if (mRect.rect.X == rect.X &&
-					mRect.rect.Y == rect.Y &&
-					mRect.rect.Width == rect.Width &&
-					mRect.rect.Height == rect.Height) {
+				if (mRect.rect == rect) {
 
 					moveable = true;
 				}	
@@ -142,10 +148,7 @@ namespace Project {
 
 				foreach (MoveableRectangle mRect in moveableRects) {
 
-					if (mRect.rect.X == rect.X &&
-						mRect.rect.Y == rect.Y &&
-						mRect.rect.Width == rect.Width &&
-						mRect.rect.Height == rect.Height) {
+					if (mRect.rect == rect) {
 
 						result = mRect;
 					}

@@ -109,16 +109,16 @@ namespace Project {
 
 			if (MouseEventsHandler.LeftClick(npc)) {
 
-				plr = pathManager.MoveRectAlongPath(plr, "move_to_npc", 1.0f, true);
+				plr = pathManager.MoveRectAlongPath(plr, "move_to_npc", 3.0f, true);
 			}
 
 			if (MouseEventsHandler.LeftClick(npc2)) {
 
-				plr = pathManager.MoveRectAlongPath(plr, "move_to_npc_2", 1.0f, true);
+				plr = pathManager.MoveRectAlongPath(plr, "move_to_npc_2", 3.0f, true);
 			}
 
-			plr = pathManager.MoveRectAlongPath(plr, "move_to_npc", 1.0f, false);
-			plr = pathManager.MoveRectAlongPath(plr, "move_to_npc_2", 1.0f, false);
+			plr = pathManager.MoveRectAlongPath(plr, "move_to_npc", 3.0f, false);
+			plr = pathManager.MoveRectAlongPath(plr, "move_to_npc_2", 3.0f, false);
 
 			base.Update(gameTime);
 		}
