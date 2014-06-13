@@ -19,7 +19,7 @@ namespace Project {
 
 		public void createPath(string pathName, List<Vector2> waypoints) {
 
-			if(!doesPathExists(pathName))
+			if(getPath(pathName) == null)
 				paths.Add(new Path(pathName, waypoints));
 		}
 
@@ -96,62 +96,28 @@ namespace Project {
 			return mRect.rect;
 		}
 
-		public bool doesPathExists(string pathName){
-
-			bool exists = false;
-
-			foreach (Path path in paths) {
-
-				if (path.name == pathName)
-					exists = true;
-			}
-
-			return exists;
-		}
-
 		private Path getPath(string pathName){
 
 			Path result = null;
 
-			if (doesPathExists(pathName)) {
+			foreach (Path path in paths) {
 
-				foreach (Path path in paths) {
-
-					if (path.name == pathName)
-						result = path;
-				}
+				if (path.name == pathName)
+					result = path;
 			}
 
 			return result;
-		}
-
-		public bool isRectMoveable(Rectangle rect){
-
-			bool moveable = false;
-
-			foreach (MoveableRectangle mRect in moveableRects) {
-
-				if (mRect.rect == rect) {
-
-					moveable = true;
-				}	
-			}
-
-			return moveable;
 		}
 
 		private MoveableRectangle getMoveableRectangle(Rectangle rect){
 
 			MoveableRectangle result = null;
 
-			if (isRectMoveable(rect)) {
+			foreach (MoveableRectangle mRect in moveableRects) {
 
-				foreach (MoveableRectangle mRect in moveableRects) {
+				if (mRect.rect == rect) {
 
-					if (mRect.rect == rect) {
-
-						result = mRect;
-					}
+					result = mRect;
 				}
 			}
 
@@ -219,14 +185,7 @@ namespace Project {
 			isMoving = false;
 			isFinished = false;
 		}
-
-		public void Reset(){
-
-			curWaypoint = 0;
-			isMoving = false;
-			isFinished = false;
-		}
-
+			
 		public void StartMoving(){
 
 			curWaypoint = 0;
@@ -234,14 +193,9 @@ namespace Project {
 			isMoving = true;
 		}
 
-		public void StopMoving(){
-
-			isMoving = false;
-		}
-
 		public void FinishMoving(){
 
-			StopMoving();
+			isMoving = false;
 			isFinished = true;
 		}
 	}
