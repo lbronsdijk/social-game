@@ -92,12 +92,12 @@ namespace Project {
 
 		public void StartGame() {
 
-			LoadScene("menu");
+			LoadScene("preloader");
 		}
 
 		public void ExitGame() {
 
-			//Game.Exit();
+			this.game.Exit();
 		}
 
 		public void LoadScene(string sceneName){
@@ -107,6 +107,11 @@ namespace Project {
 			switch (sceneName) {
 
 			default:
+			case "preloader":
+				PreLoaderScene preloaderScene = new PreLoaderScene(game);
+				game.Components.Add(preloaderScene);
+				break;
+
 			case "menu":
 				MenuScene menuScene = new MenuScene(game);
 				game.Components.Add(menuScene);

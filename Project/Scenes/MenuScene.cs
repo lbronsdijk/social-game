@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -13,6 +14,7 @@ namespace Project {
 	
 		SpriteBatch spriteBatch;
 		Texture2D logoTexture;
+		UIButton gameButton, exitButton;
 
 		public MenuScene(Game game) : base(game) {
 
@@ -36,16 +38,29 @@ namespace Project {
 			logoTexture = base.game.Content.Load<Texture2D>("Images/logo");
 
 			base.LoadFonts();
+
+			gameButton = new UIButton(
+				game, 
+				new Rectangle(325, 10, 150, 50), 
+				base.fonts["Arial_24px"], 
+				"Spelen"
+			);
+
+			exitButton = new UIButton(
+				game, 
+				new Rectangle(325, 100, 150, 50), 
+				base.fonts["Arial_24px"], 
+				"Afsluiten"
+			);
+
 			base.LoadContent();
 		}
 
 		public override void Update(GameTime gameTime) {
+		
+			if(gameButton.isClicked()) base.gameManager.LoadScene("game");
+			if(exitButton.isClicked()) base.gameManager.ExitGame();
 
-			KeyboardState keyState = Keyboard.GetState();
-
-			if(keyState.IsKeyDown(Keys.Space))
-				base.gameManager.LoadScene("game");
-			
 			base.Update(gameTime);
 		}
 
@@ -57,7 +72,7 @@ namespace Project {
 
 			spriteBatch.Draw(logoTexture, new Vector2 (25, 200), Color.White);
 
-			base.fonts["Arial_32px"].DrawText(spriteBatch, 25, 25, base.gameManager.screenWidth, "Menu Scene", Color.White, false);
+			base.fonts["Arial_32px"].DrawText(spriteBatch, new Vector2(25, 25), "Menu Scene", Color.White);
 
 			spriteBatch.End();
 

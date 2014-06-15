@@ -7,10 +7,8 @@ using BMFont;
 
 namespace Project {
 
-	public class TextBox : DrawableGameComponent {
-
-		private Game game;
-		private SpriteBatch spriteBatch;
+	public class UITextBox : UIElement {
+	
 		private Rectangle clickArea;
 		private bool selected;
 		private int delay;
@@ -129,12 +127,8 @@ namespace Project {
 			}
 		}
 
-		public TextBox(Game game, FontRenderer font) : base(game) {
-
-			this.UpdateOrder = 1;
-			this.DrawOrder = 1;
-
-			this.game = game;
+		public UITextBox(Game game, FontRenderer font) : base(game) {
+		
 			this.font = font;
 			this.position = Vector2.Zero;
 			this.text = "";
@@ -153,23 +147,23 @@ namespace Project {
 
 		public override void Initialize() {
 
+			base.Initialize();
+
 			clickArea = new Rectangle ((int)_position.X, (int)_position.Y, _width, _height);
 
 			selected = false;
 			delay = 500;
 			oldKeys = new Keys[0];
-
-			base.Initialize();
 		}
 
 		protected override void LoadContent() {
+
+			base.LoadContent();
 
 			spriteBatch = new SpriteBatch (this.game.GraphicsDevice);
 
 			pixel = new Texture2D(this.game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 			pixel.SetData(new[] { Color.White });
-
-			base.LoadContent();
 		}
 
 		public override void Update(GameTime gameTime) {
@@ -423,7 +417,7 @@ namespace Project {
 
 			spriteBatch.Draw(pixel, backgroundRect, _backgroundColor);
 
-			_font.DrawText(spriteBatch, (int)_position.X, (int)_position.Y, _width, _text, _fontColor, _multiLines);
+			_font.DrawTextForUITextBox(spriteBatch, _position, _width, _text, _fontColor);
 
 			spriteBatch.End();
 
