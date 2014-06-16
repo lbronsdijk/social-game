@@ -26,7 +26,7 @@ namespace Project {
 
 		public override void Initialize() {
 
-			base.gameManager.windowTitle = "Menu Scene";
+			base.gameManager.windowTitle = "Menu";
 
 			base.Initialize();
 		}
@@ -41,14 +41,14 @@ namespace Project {
 
 			gameButton = new UIButton(
 				game, 
-				new Rectangle(325, 200, 150, 50), 
-				base.fonts["Arial_24px"], 
+				new Rectangle(300, 200, 200, 75), 
+				base.fonts["Arial_32px"], 
 				"Spelen"
 			);
 
 			exitButton = new UIButton(
 				game, 
-				new Rectangle(325, 300, 150, 50), 
+				new Rectangle(325, 350, 150, 50), 
 				base.fonts["Arial_24px"], 
 				"Afsluiten"
 			);
@@ -58,7 +58,7 @@ namespace Project {
 
 		public override void Update(GameTime gameTime) {
 		
-			if(gameButton.isClicked()) base.gameManager.LoadScene("game");
+			if(gameButton.isClicked()) base.gameManager.LoadScene("level1");
 			if(exitButton.isClicked()) base.gameManager.ExitGame();
 
 			base.Update(gameTime);

@@ -53,6 +53,27 @@ namespace Project {
 			base.LoadContent();
 		}
 
+		public override void Update(GameTime gameTime) {
+
+			if (MouseEventsHandler.LeftClick (button.rect)) {
+
+				if (textBox.text == answer) {
+
+					correctHandler();
+
+				} else {
+
+					incorrectHandler();
+				}
+
+				this.game.Components.Remove(textBox);
+				this.game.Components.Remove(button);
+				this.game.Components.Remove(this);
+			}
+
+			base.Update(gameTime);
+		}
+
 		public override void Draw(GameTime gameTime) {
 
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);

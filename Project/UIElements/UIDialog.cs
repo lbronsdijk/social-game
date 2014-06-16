@@ -56,7 +56,7 @@ namespace Project {
 			base.Initialize();
 
 			delayInMilliseconds = 50;
-			removeDelay = 3000;
+			removeDelay = 1500;
 			time = 0;
 			isDoneDrawing = false;
 		}
@@ -122,7 +122,7 @@ namespace Project {
 
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
-			spriteBatch.Draw (pixel, new Rectangle(0, 0, 800, 600), Color.Black * 0.2f);
+			//spriteBatch.Draw (pixel, new Rectangle(0, 0, 800, 600), Color.Black * 0.2f);
 
 			spriteBatch.Draw(pixel, borderRect, borderColor);
 

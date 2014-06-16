@@ -117,9 +117,19 @@ namespace Project {
 				game.Components.Add(menuScene);
 				break;
 
-			case "game":
-				GameScene gameScene = new GameScene(game);
-				game.Components.Add(gameScene);
+			case "level1":
+				Level01Scene level01Scene = new Level01Scene(game);
+				game.Components.Add(level01Scene);
+				break;
+
+			case "level2":
+				Level02Scene level02Scene = new Level02Scene(game);
+				game.Components.Add(level02Scene);
+				break;
+
+			case "level3":
+				Level03Scene level03Scene = new Level03Scene(game);
+				game.Components.Add(level03Scene);
 				break;
 			}
 		}

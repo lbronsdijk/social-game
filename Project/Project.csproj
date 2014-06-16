@@ -83,7 +83,6 @@
     <Compile Include="Application.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Scenes\BaseScene.cs" />
-    <Compile Include="Scenes\GameScene.cs" />
     <Compile Include="Scenes\MenuScene.cs" />
     <Compile Include="BMFont\FontChar.cs" />
     <Compile Include="BMFont\FontCommon.cs" />
@@ -104,6 +103,11 @@
     <Compile Include="UIElements\UIDialog.cs" />
     <Compile Include="Bobby.cs" />
     <Compile Include="Quests\Question.cs" />
+    <Compile Include="Objects\Obstacle.cs" />
+    <Compile Include="Scenes\Level01Scene.cs" />
+    <Compile Include="Scenes\Level02Scene.cs" />
+    <Compile Include="Scenes\Level03Scene.cs" />
+    <Compile Include="NPC\Moeder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -140,6 +144,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
     <BundleResource Include="Content\Images\bobby.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Content\Images\obstacle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Content\Images\moeder.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
   </ItemGroup>
