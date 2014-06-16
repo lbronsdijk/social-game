@@ -120,7 +120,9 @@ namespace Project {
 
 		public override void Draw(GameTime gameTime) {
 
-			spriteBatch.Begin();
+			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+
+			spriteBatch.Draw (pixel, new Rectangle(0, 0, 800, 600), Color.Black * 0.2f);
 
 			spriteBatch.Draw(pixel, borderRect, borderColor);
 

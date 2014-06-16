@@ -43,10 +43,6 @@ namespace Project {
 
 			base.LoadFonts();
 
-			textBox1 = new UITextBox(base.game, base.fonts["Comic_Sans_24px"]);
-			textBox1.position = new Vector2(25, 25);
-			textBox1.width = 300;
-
 			pixel = new Texture2D(this.game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 			pixel.SetData(new[] { Color.White });
 
@@ -99,7 +95,16 @@ namespace Project {
 					base.gameManager.screenWidth, 
 					base.gameManager.screenHeight,
 					() => {
-						Debug.WriteLine("Finish Dialog");
+
+						new Question(game, base.fonts["Arial_32px"], "Hoeveel is 5 x 5?", "25", () => {
+						
+							Debug.WriteLine("correct!");
+
+						}, () => {
+
+							Debug.WriteLine("incorrect!");
+
+						});
 					}
 				);
 			});
@@ -143,8 +148,6 @@ namespace Project {
 			spriteBatch.Draw(pixel, npc, Color.ForestGreen);
 			spriteBatch.Draw(pixel, npc2, Color.ForestGreen);
 			spriteBatch.Draw(pixel, obstacle, Color.Gray);
-
-			base.fonts["Arial_24px"].DrawText(spriteBatch, new Vector2(335, 25), "Game Scene", Color.White);
 
 			spriteBatch.End();
 

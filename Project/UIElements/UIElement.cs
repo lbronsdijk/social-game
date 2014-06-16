@@ -11,8 +11,8 @@ namespace Project {
 
 		public UIElement (Game game) : base(game) {
 
-			this.UpdateOrder = 1;
-			this.DrawOrder = 1;
+			this.UpdateOrder = 2;
+			this.DrawOrder = 2;
 
 			this.game = game;
 		}

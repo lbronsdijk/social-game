@@ -103,6 +103,7 @@
     <Compile Include="Scenes\PreLoaderScene.cs" />
     <Compile Include="UIElements\UIDialog.cs" />
     <Compile Include="Bobby.cs" />
+    <Compile Include="Quests\Question.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
