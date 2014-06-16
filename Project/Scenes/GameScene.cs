@@ -14,11 +14,11 @@ namespace Project {
 	public class GameScene : BaseScene {
 
 		SpriteBatch spriteBatch;
-		Texture2D logoTexture;
 
 		UITextBox textBox1;
 		Texture2D pixel;
-		Rectangle plr, npc, npc2, obstacle;
+		Rectangle npc, npc2, obstacle;
+		Bobby bobby;
 
 		PathManager pathManager = new PathManager();
 
@@ -41,11 +41,7 @@ namespace Project {
 
 			spriteBatch = new SpriteBatch(base.game.GraphicsDevice);
 
-			logoTexture = base.game.Content.Load<Texture2D>("Images/logo");
-
 			base.LoadFonts();
-
-			//UIButton btn = new UIButton(game);
 
 			textBox1 = new UITextBox(base.game, base.fonts["Comic_Sans_24px"]);
 			textBox1.position = new Vector2(25, 25);
@@ -54,12 +50,7 @@ namespace Project {
 			pixel = new Texture2D(this.game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 			pixel.SetData(new[] { Color.White });
 
-			plr = new Rectangle(
-				350, 
-				480, 
-				50, 
-				50
-			);
+			bobby = new Bobby(game, new Vector2(350, 430));
 
 			npc = new Rectangle(
 				350, 
@@ -85,20 +76,37 @@ namespace Project {
 			List<Vector2> wayPoints = new List<Vector2>();
 			wayPoints.Add(new Vector2(350, 360));
 			wayPoints.Add(new Vector2(165, 360));
-			wayPoints.Add(new Vector2(165, 240));
-			wayPoints.Add(new Vector2(350, 240));
+			wayPoints.Add(new Vector2(165, 190));
+			wayPoints.Add(new Vector2(350, 190));
 			wayPoints.Add(new Vector2(350, 160));
 
 			List<Vector2> wayPoints2 = new List<Vector2>();
 			wayPoints2.Add(new Vector2(350, 160));
-			wayPoints2.Add(new Vector2(350, 240));
-			wayPoints2.Add(new Vector2(535, 240));
+			wayPoints2.Add(new Vector2(350, 190));
+			wayPoints2.Add(new Vector2(535, 190));
 			wayPoints2.Add(new Vector2(535, 360));
 			wayPoints2.Add(new Vector2(350, 360));
-			wayPoints2.Add(new Vector2(350, 480));
+			wayPoints2.Add(new Vector2(350, 430));
 
-			pathManager.createPath("move_to_npc", wayPoints);
-			pathManager.createPath("move_to_npc_2", wayPoints2);
+			pathManager.createPath("move_to_npc", wayPoints, () => {
+
+				new UIDialog(
+					game, 
+					base.fonts["Arial_24px"], 
+					"Dialog aan het testen, doet die het of doet die het niet? " +
+					"Woorden komen als het goed is op een nieuwe regel als ze de regel te lang maken. " +
+					"Deze shit is de bommmm!", 
+					base.gameManager.screenWidth, 
+					base.gameManager.screenHeight,
+					() => {
+						Debug.WriteLine("Finish Dialog");
+					}
+				);
+			});
+
+			pathManager.createPath("move_to_npc_2", wayPoints2, () => {
+				Debug.WriteLine("function invoke!");
+			});
 
 			base.LoadContent();
 		}
@@ -112,16 +120,16 @@ namespace Project {
 
 			if (MouseEventsHandler.LeftClick(npc)) {
 
-				plr = pathManager.MoveRectAlongPath(plr, "move_to_npc", 3.0f, true);
+				bobby.rect = pathManager.MoveRectAlongPath(bobby.rect, "move_to_npc", 3.0f, true);
 			}
 
 			if (MouseEventsHandler.LeftClick(npc2)) {
 
-				plr = pathManager.MoveRectAlongPath(plr, "move_to_npc_2", 3.0f, true);
+				bobby.rect = pathManager.MoveRectAlongPath(bobby.rect, "move_to_npc_2", 3.0f, true);
 			}
 
-			plr = pathManager.MoveRectAlongPath(plr, "move_to_npc", 3.0f, false);
-			plr = pathManager.MoveRectAlongPath(plr, "move_to_npc_2", 3.0f, false);
+			bobby.rect = pathManager.MoveRectAlongPath(bobby.rect, "move_to_npc", 3.0f, false);
+			bobby.rect = pathManager.MoveRectAlongPath(bobby.rect, "move_to_npc_2", 3.0f, false);
 
 			base.Update(gameTime);
 		}
@@ -132,9 +140,6 @@ namespace Project {
 
 			spriteBatch.Begin();
 
-			spriteBatch.Draw(logoTexture, new Vector2 (700, 500), Color.White);
-
-			spriteBatch.Draw(pixel, plr, Color.White);
 			spriteBatch.Draw(pixel, npc, Color.ForestGreen);
 			spriteBatch.Draw(pixel, npc2, Color.ForestGreen);
 			spriteBatch.Draw(pixel, obstacle, Color.Gray);

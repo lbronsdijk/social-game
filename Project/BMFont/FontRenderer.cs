@@ -132,7 +132,7 @@ namespace BMFont
 
 		}
 
-		public void DrawTextForUIDialog(SpriteBatch spriteBatch, Vector2 pos, int maxWidth, string text, Color fontColor){
+		public void DrawTextForUIDialog(SpriteBatch spriteBatch, Vector2 pos, int maxWidth, int padding, string text, Color fontColor){
 
 			if (spriteBatch == null || text == null) {
 				return;
@@ -140,28 +140,76 @@ namespace BMFont
 
 			List<Character> characters = GetListOfCharacters(text);
 
+			pos = new Vector2(pos.X + padding, pos.Y + padding);
+			maxWidth = maxWidth - (padding * 2);
+
 			Dictionary<int, List<Character>> lines = new Dictionary<int, List<Character>>();
 
 			List<Character> line = new List<Character>();
 			int lineNumber = 1;
 			int curWidth = 0;
+			int wordWidth = 0;
+
+			List<Character> word = new List<Character>();
 
 			foreach (Character character in characters) {
 
-				curWidth += (character.rect.Width + character.xOffset);
+				if (character.c.ToString () != " ") {
 
-				if (curWidth >= maxWidth) {
-				
-					//add
-					lines.Add(lineNumber, line);
-					//reset
-					line = new List<Character>();
-					lineNumber++;
-					curWidth = 0;
+					word.Add(character);
 
+				} else {
+
+					foreach (Character c in word) {
+
+						wordWidth += (c.rect.Width + c.xOffset);
+					}
+
+					curWidth += wordWidth;
+
+					if (curWidth >= maxWidth) {
+
+						//add
+						lines.Add(lineNumber, line);
+						//reset
+						line = new List<Character>();
+						lineNumber++;
+						curWidth = wordWidth;
+					}
+
+					foreach (Character c in word) {
+					
+						line.Add(c);
+					}
+
+					word = new List<Character>();
+					wordWidth = 0;
+
+					curWidth += (character.rect.Width + character.xOffset);
+					line.Add(character);
 				}
+			}
 
-				line.Add(character);
+			foreach (Character c in word) {
+
+				wordWidth += (c.rect.Width + c.xOffset);
+			}
+
+			curWidth += wordWidth;
+
+			if (curWidth >= maxWidth) {
+
+				//add
+				lines.Add(lineNumber, line);
+				//reset
+				line = new List<Character>();
+				lineNumber++;
+				curWidth = 0;
+			}
+
+			foreach (Character c in word) {
+
+				line.Add(c);
 			}
 
 			lines.Add(lineNumber, line);
@@ -170,9 +218,13 @@ namespace BMFont
 
 			foreach (KeyValuePair<int, List<Character>> l in lines) {
 
+				bool firstChar = true;
 				int height = 0;
 
 				foreach (Character character in l.Value as List<Character>) {
+
+					if (firstChar && character.c.ToString () == " ")
+						continue;
 
 					spriteBatch.Draw (
 						_texture, 
@@ -190,6 +242,8 @@ namespace BMFont
 
 					if (curHeight > height)
 						height = curHeight;
+
+					firstChar = false;
 				}
 
 				pos.X = x;

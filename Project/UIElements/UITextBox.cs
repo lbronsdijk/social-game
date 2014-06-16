@@ -160,8 +160,6 @@ namespace Project {
 
 			base.LoadContent();
 
-			spriteBatch = new SpriteBatch (this.game.GraphicsDevice);
-
 			pixel = new Texture2D(this.game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 			pixel.SetData(new[] { Color.White });
 		}

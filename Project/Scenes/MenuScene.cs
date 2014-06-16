@@ -13,7 +13,7 @@ namespace Project {
 	public class MenuScene : BaseScene {
 	
 		SpriteBatch spriteBatch;
-		Texture2D logoTexture;
+		//Texture2D logoTexture;
 		UIButton gameButton, exitButton;
 
 		public MenuScene(Game game) : base(game) {
@@ -35,20 +35,20 @@ namespace Project {
 
 			spriteBatch = new SpriteBatch(base.game.GraphicsDevice);
 
-			logoTexture = base.game.Content.Load<Texture2D>("Images/logo");
+			//logoTexture = base.game.Content.Load<Texture2D>("Images/logo");
 
 			base.LoadFonts();
 
 			gameButton = new UIButton(
 				game, 
-				new Rectangle(325, 10, 150, 50), 
+				new Rectangle(325, 200, 150, 50), 
 				base.fonts["Arial_24px"], 
 				"Spelen"
 			);
 
 			exitButton = new UIButton(
 				game, 
-				new Rectangle(325, 100, 150, 50), 
+				new Rectangle(325, 300, 150, 50), 
 				base.fonts["Arial_24px"], 
 				"Afsluiten"
 			);
@@ -70,9 +70,9 @@ namespace Project {
 
 			spriteBatch.Begin();
 
-			spriteBatch.Draw(logoTexture, new Vector2 (25, 200), Color.White);
+			//spriteBatch.Draw(logoTexture, new Vector2 (25, 200), Color.White);
 
-			base.fonts["Arial_32px"].DrawText(spriteBatch, new Vector2(25, 25), "Menu Scene", Color.White);
+			//base.fonts["Arial_32px"].DrawText(spriteBatch, new Vector2(25, 25), "Menu Scene", Color.White);
 
 			spriteBatch.End();
 

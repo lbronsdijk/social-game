@@ -17,10 +17,10 @@ namespace Project {
 			moveableRects = new List<MoveableRectangle>();
 		}
 
-		public void createPath(string pathName, List<Vector2> waypoints) {
+		public void createPath(string pathName, List<Vector2> waypoints, Action finishHandler) {
 
 			if(getPath(pathName) == null)
-				paths.Add(new Path(pathName, waypoints));
+				paths.Add(new Path(pathName, waypoints, finishHandler));
 		}
 
 		public Rectangle MoveRectAlongPath(Rectangle rect, string pathName, float speed, bool start) {
@@ -63,6 +63,7 @@ namespace Project {
 			if (mRect.curWaypoint == path.numberOfWayPoints) {
 			
 				mRect.FinishMoving();
+				path.finishHandler();
 				Debug.WriteLine("reached end of path");
 
 			} else {
@@ -130,12 +131,14 @@ namespace Project {
 		public string name;
 		public List<Vector2> waypoints;
 		public int numberOfWayPoints;
+		public Action finishHandler;
 
-		public Path(string pathName, List<Vector2> waypoints) {
+		public Path(string pathName, List<Vector2> waypoints, Action finishHandler) {
 
 			this.name = pathName;
 			this.waypoints = waypoints;
 			this.numberOfWayPoints = waypoints.Count;
+			this.finishHandler = finishHandler;
 		}
 
 		public int indexOfNearestWaypoint(Rectangle rect){

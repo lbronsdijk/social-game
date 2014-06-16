@@ -101,6 +101,8 @@
     <Compile Include="UIElements\UIElement.cs" />
     <Compile Include="UIElements\UITextBox.cs" />
     <Compile Include="Scenes\PreLoaderScene.cs" />
+    <Compile Include="UIElements\UIDialog.cs" />
+    <Compile Include="Bobby.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -134,6 +136,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
     <BundleResource Include="Content\Fonts\Comic_Sans_24px.fnt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Content\Images\bobby.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
   </ItemGroup>
